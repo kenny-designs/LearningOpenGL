@@ -10,6 +10,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+// Math
+#include <math.h>
+
 // Image loader
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -183,20 +186,16 @@ int main()
 		// Render container
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		// doing again
-		/*
-		// Translate and Rotate
+		// Translate and Scale
 		trans = glm::mat4(1.0f);
 		trans = glm::translate(trans, glm::vec3(-0.5f, 0.5f, 0.0f));
-		trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+		trans = glm::scale(trans, glm::vec3(1.5f, 1.5f, 0.0f) * (float)cos(glfwGetTime()));
 
 		// Apply translation and rotation
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(trans));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, &trans[0][0]);
 
 		// Render container
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		*/
-
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
