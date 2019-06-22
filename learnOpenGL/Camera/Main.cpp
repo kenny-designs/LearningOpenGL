@@ -18,6 +18,7 @@
 #include "stb_image.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 
 // settings
@@ -28,6 +29,12 @@ const unsigned int SCR_HEIGHT = 600;
 glm::vec3 cameraPos		= glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront	= glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp		= glm::vec3(0.0f, 1.0f, 0.0f);
+
+bool firstMouse = true;
+float yaw = -90.0f;	// yaw is initialized to -90.0 degrees since a yaw of 0.0 results in a direction vector pointing to the right so we initially rotate a bit to the left.
+float pitch = 0.0f;
+float lastX = ((float)SCR_WIDTH) / 2.0f;
+float lastY = ((float)SCR_HEIGHT) / 2.0f;
 
 // timing
 float deltaTime = 0.0f;	// time between current frame and last frame
@@ -53,6 +60,10 @@ int main()
 	}
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+
+	// tell GLFW to capture our mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// glad: load all OpenGL function pointers
 	// ---------------------------------------
@@ -146,7 +157,6 @@ int main()
 	// texture coord attribute
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
 
 	// load and create a texture 
 	// -------------------------
@@ -302,4 +312,39 @@ void framebuffer_size_callback(GLFWwindow * window, int width, int height)
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
+}
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if (firstMouse) // this bool variable is initially set to true
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates range from bottom to top
+	lastX = xpos;
+	lastY = ypos;
+
+	float sensitivity = 0.05f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw	  += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
 }
