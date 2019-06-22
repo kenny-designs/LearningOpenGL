@@ -135,6 +135,7 @@
     <Image Include="container.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="shader_m.h" />
   </ItemGroup>
   <ItemGroup>
