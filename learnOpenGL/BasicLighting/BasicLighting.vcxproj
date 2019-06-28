@@ -135,8 +135,10 @@
     <ClInclude Include="shader_m.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="colors.frag" />
-    <None Include="colors.vert" />
+    <None Include="phong.frag" />
+    <None Include="phong.vert" />
+    <None Include="gouraud.frag" />
+    <None Include="gouraud.vert" />
     <None Include="lamp.frag" />
     <None Include="lamp.vert" />
   </ItemGroup>

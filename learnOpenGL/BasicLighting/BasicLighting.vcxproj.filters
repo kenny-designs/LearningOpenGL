@@ -31,9 +31,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="colors.frag" />
-    <None Include="colors.vert" />
     <None Include="lamp.frag" />
     <None Include="lamp.vert" />
+    <None Include="gouraud.vert" />
+    <None Include="gouraud.frag" />
+    <None Include="phong.frag" />
+    <None Include="phong.vert" />
   </ItemGroup>
 </Project>

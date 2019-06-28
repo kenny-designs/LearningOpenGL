@@ -78,7 +78,8 @@ int main()
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	Shader lightingShader("colors.vert", "colors.frag");
+	Shader lightingShader("phong.vert", "phong.frag");
+	//Shader lightingShader("gouraud.vert", "gouraud.frag");
 	Shader lampShader("lamp.vert", "lamp.frag");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
